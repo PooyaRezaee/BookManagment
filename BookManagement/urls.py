@@ -17,6 +17,10 @@ from django.contrib import admin
 from django.urls import path,include
 
 urlpatterns = [
+    # Intenal apps
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
+
+    # Local apps
     path("", include("apps.pages.urls",namespace='page')),
 ]
