@@ -23,4 +23,5 @@ urlpatterns = [
 
     # Local apps
     path("", include("apps.pages.urls",namespace='page')),
+    path("accounts/", include("apps.accounts.urls",namespace='account')),
 ]
