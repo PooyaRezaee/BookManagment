@@ -8,4 +8,4 @@ __all__ = [
 
 class HomeView(View):
     def get(self,request):
-        return HttpResponse('Hello World')
+        return render(request, 'index.html')
