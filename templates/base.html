@@ -14,8 +14,26 @@
 </head>
 <body class="bg-dark text-light">
     <header>
-        <nav class="bg-warning text-black mb-3 p-2 fs-4 fw-bold">
-            <p class="text-center">This is Header</p>
+        <nav class="bg-warning text-black mb-3 p-2 fs-4 fw-bold text-center">
+            <ul class="list-inline col-10 m-auto">
+            {% if user.is_authenticated %}
+                <li class="list-inline-item">
+                    <p class="text-center">Hi {{ user.username }}</p>
+                </li>
+                <li class="list-inline-item">
+                    <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+                </li>
+                
+                {% else %}
+                <li class="list-inline-item">
+                    <p class="text-center">You Are Gust</p>
+                </li>
+                <li class="list-inline-item">
+                    <a href="" class="btn btn-outline-dark">Register</a>
+                    <a href="{% url 'login' %}" class="btn btn-dark">Login</a>
+                </li>            
+                {% endif %}
+            </ul>
         </nav>
     </header>
 
