@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'BookManagement.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'test': {
+    'default': {
         'ENGINE': 'django.db.backends.postgresql',
         "NAME": "postgres",
         "USER": "postgres",
@@ -93,7 +93,7 @@ DATABASES = {
         "HOST": "db",
         "PORT": 5432,
     },
-    'default': {
+    'test': {
         'ENGINE': 'django.db.backends.sqlite3',
         "NAME": BASE_DIR / 'db.sqlite3',
     }
@@ -169,3 +169,8 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
