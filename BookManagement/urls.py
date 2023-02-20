@@ -19,7 +19,7 @@ from django.urls import path,include
 urlpatterns = [
     # Intenal apps
     path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/', include('allauth.urls')),
 
     # Local apps
     path("", include("apps.pages.urls",namespace='page')),

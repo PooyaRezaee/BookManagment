@@ -37,10 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites', 
 
     # 3rd Party
     "crispy_forms",
     "crispy_bootstrap5", 
+    'allauth',
+    'allauth.account',
 
     # Local
     'apps.accounts.apps.AccountsConfig',
@@ -82,7 +85,7 @@ WSGI_APPLICATION = 'BookManagement.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'test': {
         'ENGINE': 'django.db.backends.postgresql',
         "NAME": "postgres",
         "USER": "postgres",
@@ -90,7 +93,7 @@ DATABASES = {
         "HOST": "db",
         "PORT": 5432,
     },
-    'test': {
+    'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         "NAME": BASE_DIR / 'db.sqlite3',
     }
@@ -147,11 +150,22 @@ STATICFILES_FINDERS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
+ACCOUNT_LOGOUT_REDIRECT = 'page:index'
 LOGIN_REDIRECT_URL = 'page:index'
 LOGOUT_REDIRECT_URL = 'page:index'
 
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+ACCOUNT_SESSION_REMEMBER = True
