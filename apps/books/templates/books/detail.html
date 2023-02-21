@@ -9,7 +9,7 @@
 
 {% block body %}
     
-<div class="col-10 m-auto bg-secondary rounded p-3">
+<div class="col-6 m-auto bg-secondary rounded p-3">
     <div class="col-10 p-3 bg-dark text-light rounded m-auto">
         <!-- For Img IN leter -->
         <h1 class="text-center">{{ book.title }}</h1>
@@ -26,6 +26,24 @@
             <a href="#" class="col-12 btn btn-primary">Buy</a>
         </div>
     </div>
+</div>
+
+<div class="col-8 m-auto mt-5 bg-black p-5">
+    <h2>Reviews</h2>
+
+    <hr>
+    {% for review in book.all_reviews %}
+        <small>{{ review.author }}</small>
+        <p>{{ review.review }}</p>
+
+        {% if review in user.review_like.all %}
+        <a href="#" class="btn btn-danger">{{ review.count_like }} Like</a>
+        {% else %}
+        <a href="#" class="btn btn-success">{{ review.count_like }} Like</a>
+        {% endif %}
+        <hr>
+    {% endfor %}
+        
 </div>
 {% endblock body %}
     

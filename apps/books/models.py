@@ -17,6 +17,9 @@ class Book(models.Model):
     def get_absolute_url(self):
         return reverse('book:detail', args=[str(self.id)])
 
+    def all_reviews(self):
+        return self.reviews.all()
+
 class Review(models.Model):
     book = models.ForeignKey(Book,on_delete=models.CASCADE,related_name='reviews')
     review = models.CharField(max_length=255)
@@ -25,3 +28,6 @@ class Review(models.Model):
 
     def __str__(self):
         return self.review
+    
+    def count_like(self):
+        return self.likes.count()
