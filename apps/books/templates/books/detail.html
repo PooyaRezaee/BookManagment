@@ -37,9 +37,9 @@
         <p>{{ review.review }}</p>
 
         {% if review in user.review_like.all %}
-        <a href="#" class="btn btn-danger">{{ review.count_like }} Like</a>
+        <a href="{% url 'book:review-like' %}?stat=unlike&pk={{review.pk}}" class="btn btn-danger">{{ review.count_like }} Like</a>
         {% else %}
-        <a href="#" class="btn btn-success">{{ review.count_like }} Like</a>
+        <a href="{% url 'book:review-like' %}?stat=like&pk={{review.pk}}" class="btn btn-success">{{ review.count_like }} Like</a>
         {% endif %}
         <hr>
     {% endfor %}
