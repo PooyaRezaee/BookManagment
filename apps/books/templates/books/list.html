@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    Book List
+{% endblock title %}
+    
+
+
+{% block body %}
+    
+<div class="col-10 m-auto d-flex flex-wrap bg-secondary rounded p-3 justify-content-around">
+    {% for book in books %}
+    <div class="col-3 p-3 bg-dark text-light rounded m-2">
+        <!-- For Img IN leter -->
+        <h1 class="text-center">{{ book.title }}</h1>
+        <hr>
+        <div class="d-flex justify-content-between">
+            <span class="badge bg-secondary">
+                {{ book.author }}
+            </span>
+            <span class="badge bg-success">
+                {{ book.price }} $
+            </span>
+        </div>
+        <div class="mt-2">
+            <a href="#" class="col-12 btn btn-primary">Buy</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock body %}
+    
