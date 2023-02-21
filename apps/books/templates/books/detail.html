@@ -9,9 +9,8 @@
 
 {% block body %}
     
-<div class="col-10 m-auto d-flex flex-wrap bg-secondary rounded p-3 justify-content-around">
-    {% for book in books %}
-    <div class="col-3 p-3 bg-dark text-light rounded m-2">
+<div class="col-10 m-auto bg-secondary rounded p-3">
+    <div class="col-10 p-3 bg-dark text-light rounded m-auto">
         <!-- For Img IN leter -->
         <h1 class="text-center">{{ book.title }}</h1>
         <hr>
@@ -24,10 +23,9 @@
             </span>
         </div>
         <div class="mt-2">
-            <a href="{% url 'book:detail' book.id %}" class="col-12 btn btn-primary">Show</a>
+            <a href="#" class="col-12 btn btn-primary">Buy</a>
         </div>
     </div>
-    {% endfor %}
 </div>
 {% endblock body %}
     
