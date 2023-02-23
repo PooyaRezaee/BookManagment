@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 
 {% block title %}
     Book List
@@ -11,20 +11,28 @@
     
 <div class="col-10 m-auto d-flex flex-wrap bg-secondary rounded p-3 justify-content-around">
     {% for book in books %}
-    <div class="col-3 p-3 bg-dark text-light rounded m-2">
-        <!-- For Img IN leter -->
-        <h1 class="text-center">{{ book.title }}</h1>
-        <hr>
-        <div class="d-flex justify-content-between">
-            <span class="badge bg-secondary">
-                {{ book.author }}
-            </span>
-            <span class="badge bg-success">
-                {{ book.price }} $
-            </span>
+    <div class="col-3 p-3 bg-dark text-light rounded m-2 d-flex flex-column justify-content-between">
+        <div class="text-center">
+            {% if book.cover %}
+            <img src='{{ book.cover.url }}' class="col-8">
+            {% else %}
+            <img src="{% static 'img/null_book.png' %}">
+            {% endif %}
         </div>
-        <div class="mt-2">
-            <a href="{{ book.get_absolute_url }}" class="col-12 btn btn-primary">Show</a>
+        <div>
+            <h1 class="text-center">{{ book.title }}</h1>
+            <hr>
+            <div class="d-flex justify-content-between">
+                <span class="badge bg-secondary">
+                    {{ book.author }}
+                </span>
+                <span class="badge bg-success">
+                    {{ book.price }} $
+                </span>
+            </div>
+            <div class="mt-2">
+                <a href="{{ book.get_absolute_url }}" class="col-12 btn btn-primary">Show</a>
+            </div>
         </div>
     </div>
     {% endfor %}
