@@ -1,16 +1,26 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Permission 
 from .models import Book,Review 
 
 class BookTests(TestCase):
 
     def setUp(self):
-        self.user = get_user_model().objects.create_user(
+        self.user_with_per = get_user_model().objects.create_user(
             username='reviewuser',
             email='reviewuser@email.com',
             password='testpass123'
         )
+        self.detail_permission = Permission.objects.get(codename='detial_see')
+        self.user_with_per.user_permissions.add(self.detail_permission)
+
+        self.user_without_per = get_user_model().objects.create_user(
+            username='reviewuser2',
+            email='reviewuser2@email.com',
+            password='testpass123'
+        )
+
         self.book = Book.objects.create(
             title='Harry Potter',
             author='JK Rowling',
@@ -19,7 +29,7 @@ class BookTests(TestCase):
         )
         self.review = Review.objects.create(
             book = self.book,
-            author = self.user,
+            author = self.user_with_per,
             review = 'An excellent review',
         )
 
@@ -35,7 +45,20 @@ class BookTests(TestCase):
         self.assertContains(response, 'Harry Potter')
         self.assertTemplateUsed(response, 'books/list.html')
 
-    def test_book_detail_view(self):
+    def test_book_detail_without_permissions_view(self):
+        self.client.login(email='reviewuser2@email.com', password='testpass123')
+        response = self.client.get(self.book.get_absolute_url())
+        no_response = self.client.get('/books/12345/')
+        self.assertEqual(response.status_code, 403)
+        self.assertEqual(no_response.status_code, 404)
+    
+    def test_like_review(self):
+        self.review.likes.add(self.user_with_per)
+        count_like = self.review.count_like()
+        self.assertEqual(count_like, 1)
+
+    def test_book_detail_view_with_permissions(self):
+        self.client.login(email='reviewuser@email.com', password='testpass123')
         response = self.client.get(self.book.get_absolute_url())
         no_response = self.client.get('/books/12345/')
         self.assertEqual(response.status_code, 200)
@@ -43,8 +66,3 @@ class BookTests(TestCase):
         self.assertContains(response, 'Harry Potter')
         self.assertContains(response, 'An excellent review')
         self.assertTemplateUsed(response, 'books/detail.html')
-    
-    def test_like_review(self):
-        self.review.likes.add(self.user)
-        count_like = self.review.count_like()
-        self.assertEqual(count_like, 1)
