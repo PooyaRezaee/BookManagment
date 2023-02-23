@@ -1,7 +1,7 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from django.views.generic import ListView,DetailView
 from django.views import View
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
 from .models import Book,Review
 
 __all__ = [
@@ -15,10 +15,11 @@ class BookListView(ListView):
     model = Book
     context_object_name = 'books'
 
-class BookDetailView(DetailView):
+class BookDetailView(PermissionRequiredMixin,DetailView):
     model = Book
     context_object_name = 'book'
     template_name = "books/detail.html"
+    permission_required = 'books.detial_see'
 
 class LikeReview(LoginRequiredMixin,View):
     def get(self,request):

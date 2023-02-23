@@ -12,6 +12,11 @@ class Book(models.Model):
     added_at = models.DateTimeField(auto_now_add=True)
     discount = models.PositiveIntegerField()
 
+    class Meta:
+        permissions = [
+        ('detial_see', 'Can read Detial all books'),
+        ]
+
     def __str__(self):
         return self.title
 
