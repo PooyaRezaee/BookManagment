@@ -41,6 +41,9 @@
                     <a href="{% url 'account_login' %}" class="btn btn-dark">Login</a>
                 </li>            
             {% endif %}
+                <li class="list-inline-item">
+                    <form action="{% url 'book:search' %}" method="GET" class="d-flex flex-row"><input type="text" class="form-control" name="q" placeholder="Name Book ..." value="{{ request.GET.q }}" /> <button type="submit" class="btn btn-dark">Search</button> </form>
+                </li>
             </ul>
         </nav>
     </header>

@@ -2,12 +2,14 @@ from django.shortcuts import render,get_object_or_404,redirect
 from django.views.generic import ListView,DetailView
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
+from django.db.models import Q
 from .models import Book,Review
 
 __all__ = [
     'BookListView',
     'BookDetailView',
     'LikeReview',
+    'SearchResualt'
 ]
 
 class BookListView(ListView):
@@ -34,3 +36,16 @@ class LikeReview(LoginRequiredMixin,View):
                 review.likes.remove(request.user)
 
         return redirect(review.book.get_absolute_url())
+
+class SearchResualt(ListView):
+    template_name = 'books/list.html'
+    context_object_name = 'books'
+
+    def get_queryset(self):
+        q = self.request.GET.get('q')
+        if q:
+            return Book.objects.filter(
+            Q(title__contains=q) | Q(author__contains=q)
+            )
+        else:
+            return Book.objects.all()
