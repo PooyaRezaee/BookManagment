@@ -13,6 +13,10 @@ class Book(models.Model):
     discount = models.PositiveIntegerField()
 
     class Meta:
+        indexes = [
+            models.Index(fields=['id'], name='id_index'),
+        ]
+        
         permissions = [
         ('detial_see', 'Can read Detial all books'),
         ]
